@@ -2,7 +2,6 @@
 pragma solidity ^0.8.9;
 
 contract ChitFund {
-
     struct Participant {
         address payable wallet;
         bool paid;
@@ -102,7 +101,10 @@ contract ChitFund {
         // require(msg.value == chit.installmentAmount, "Failed to send payment to contract wallet");
 
         // require(msg.value == chit.installmentAmount, "Incorrect installment amount");
-        require(msg.value == chit.installmentAmount, "Incorrect installment amount");
+        require(
+            msg.value == chit.installmentAmount,
+            "Incorrect installment amount"
+        );
 
         chit.participants[participantIndex].paid = true;
 
@@ -184,7 +186,7 @@ contract ChitFund {
         return address(this);
     }
 
-//function to transfer totalAmount to random member of the chit
+    //function to transfer totalAmount to random member of the chit
     function transferAmount(uint256 _id) public payable {
         Chit storage chit = chits[_id];
 
@@ -203,5 +205,4 @@ contract ChitFund {
         chit.participants[random].wallet.transfer(chit.totalAmount);
         chit.winners.push(chit.participants[random]);
     }
-
 }
